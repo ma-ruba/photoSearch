@@ -13,14 +13,17 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var ImageView: UIImageView!
 
+    @IBOutlet weak var textField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchImage(text: "zebra")
+        textField.delegate = self
+        ImageView.layer.masksToBounds = true
+        //searchImage(text: "zebra")
     }
 
     func convert(farm: Int, server: String, photoId: String, secret: String) -> URL? {
         let url = URL(string: "https://farm\(farm).staticflickr.com/\(server)/\(photoId)_\(secret)_c.jpg")!
-        print(url)
         return url
     }
 
@@ -29,7 +32,10 @@ class ViewController: UIViewController {
         let base = "https://www.flickr.com/services/rest/?method=flickr.photos.search"
         let key = "&api_key=565bec242644bb4ee0bdc51fbde270f4"
         let format = "&format=json&nojsoncallback=1"
-        let textToSearch = "&text=\(text)"
+        
+        let formattedText = text.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
+        
+        let textToSearch = "&text=\(formattedText)"
         let sort = "&sort=relevance"
 
         let searchUrl = base + key + format + textToSearch + sort
@@ -43,6 +49,7 @@ class ViewController: UIViewController {
                 print("error: no json")
                 return
             }
+            print(jsonAny)
             guard let json = jsonAny as? [String: Any] else {
                 return
             }
@@ -63,8 +70,22 @@ class ViewController: UIViewController {
             let photoId = firstPhoto["id"] as! String
             let secret = firstPhoto["secret"] as! String
             let server = firstPhoto["server"] as! String
-            self.convert(farm: farm, server: server, photoId: photoId, secret: secret)
+            
+            let pictureUrl = self.convert(farm: farm, server: server, photoId: photoId, secret: secret)!
+            
+            URLSession.shared.dataTask(with: pictureUrl, completionHandler: { (data, _, _) in
+                DispatchQueue.main.async {
+                    self.ImageView.image = UIImage(data: data!)
+                }
+            }).resume()
         }.resume()
+    }
+}
+
+extension ViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchImage(text: textField.text!)
+        return true
     }
 }
 

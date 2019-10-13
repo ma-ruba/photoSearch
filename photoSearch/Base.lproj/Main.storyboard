@@ -14,20 +14,36 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="photoSearch" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleAspectFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="01W-bd-s9A">
-                                <rect key="frame" x="0.0" y="34" width="375" height="302"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="01W-bd-s9A">
+                                <rect key="frame" x="0.0" y="20" width="375" height="302"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="375" id="g1R-WS-WfZ"/>
+                                    <constraint firstAttribute="height" constant="302" id="mts-aE-MBQ"/>
+                                </constraints>
                             </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jja-6z-vMg">
+                                <rect key="frame" x="0.0" y="330" width="375" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="01W-bd-s9A" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="CYl-AG-DCt"/>
+                            <constraint firstItem="01W-bd-s9A" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Ixp-Ou-nf3"/>
+                            <constraint firstItem="01W-bd-s9A" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="kaC-o6-vtG"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="ImageView" destination="01W-bd-s9A" id="jo8-ze-dk3"/>
+                        <outlet property="textField" destination="Jja-6z-vMg" id="n5M-Cp-7Qh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
