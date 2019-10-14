@@ -12,7 +12,9 @@ class ViewController: UIViewController {
 
 
     @IBOutlet weak var ImageView: UIImageView!
-
+    
+    @IBOutlet weak var loader: UIActivityIndicatorView!
+    
     @IBOutlet weak var textField: UITextField!
     
     override func viewDidLoad() {
@@ -37,8 +39,21 @@ class ViewController: UIViewController {
         }
     }
     
+    func showLoader(_ show: Bool) {
+        DispatchQueue.main.async {
+            if show {
+                self.ImageView.image = nil
+                self.loader.startAnimating()
+            } else {
+                self.loader.stopAnimating()
+            }
+        }
+    }
+    
     func searchImage(text: String) {
         //
+        showLoader(true)
+        
         let base = "https://www.flickr.com/services/rest/?method=flickr.photos.search"
         let key = "&api_key=565bec242644bb4ee0bdc51fbde270f4"
         let format = "&format=json&nojsoncallback=1"
@@ -57,20 +72,24 @@ class ViewController: UIViewController {
             }
             guard let jsonAny = try? JSONSerialization.jsonObject(with: jsonData, options: []) else {
                 self.showError("error: no json")
+                self.showLoader(false)
                 return
             }
             print(jsonAny)
             guard let json = jsonAny as? [String: Any] else {
+                self.showLoader(false)
                 return
             }
             guard let photos = json["photos"] as? [String: Any] else {
                 return
             }
             guard let photosArray = photos["photo"] as? [Any] else {
+                self.showLoader(false)
                 return
             }
             guard photosArray.count > 0 else {
                 self.showError("No photod found")
+                self.showLoader(false)
                 return
             }
             guard let firstPhoto = photosArray[0] as? [String: Any] else {
@@ -86,6 +105,7 @@ class ViewController: UIViewController {
             URLSession.shared.dataTask(with: pictureUrl, completionHandler: { (data, _, _) in
                 DispatchQueue.main.async {
                     self.ImageView.image = UIImage(data: data!)
+                    self.showLoader(false)
                 }
             }).resume()
         }.resume()

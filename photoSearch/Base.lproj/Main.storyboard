@@ -32,10 +32,16 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ICO-gj-nXD">
+                                <rect key="frame" x="169" y="153" width="37" height="37"/>
+                                <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="ICO-gj-nXD" firstAttribute="centerX" secondItem="01W-bd-s9A" secondAttribute="centerX" id="6Gu-n4-Nlw"/>
                             <constraint firstItem="01W-bd-s9A" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="CYl-AG-DCt"/>
+                            <constraint firstItem="ICO-gj-nXD" firstAttribute="centerY" secondItem="01W-bd-s9A" secondAttribute="centerY" id="DrH-yX-Zbn"/>
                             <constraint firstItem="01W-bd-s9A" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Ixp-Ou-nf3"/>
                             <constraint firstItem="01W-bd-s9A" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="kaC-o6-vtG"/>
                         </constraints>
@@ -43,6 +49,7 @@
                     </view>
                     <connections>
                         <outlet property="ImageView" destination="01W-bd-s9A" id="jo8-ze-dk3"/>
+                        <outlet property="loader" destination="ICO-gj-nXD" id="dad-Pl-hM4"/>
                         <outlet property="textField" destination="Jja-6z-vMg" id="n5M-Cp-7Qh"/>
                     </connections>
                 </viewController>
