@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         textField.delegate = self
+        textField.becomeFirstResponder()
         ImageView.layer.masksToBounds = true
         //searchImage(text: "zebra")
     }
@@ -27,6 +28,15 @@ class ViewController: UIViewController {
         return url
     }
 
+    func showError(_ text: String) {
+        let alert = UIAlertController(title: "Error", message: text, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(okButton)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
+    }
+    
     func searchImage(text: String) {
         //
         let base = "https://www.flickr.com/services/rest/?method=flickr.photos.search"
@@ -42,11 +52,11 @@ class ViewController: UIViewController {
         let url = URL(string: searchUrl)!
         URLSession.shared.dataTask(with: url) { (data, _, _) in
             guard let jsonData = data else{
-                print("error: not enough data")
+                self.showError("not enough data")
                 return
             }
             guard let jsonAny = try? JSONSerialization.jsonObject(with: jsonData, options: []) else {
-                print("error: no json")
+                self.showError("error: no json")
                 return
             }
             print(jsonAny)
@@ -60,7 +70,7 @@ class ViewController: UIViewController {
                 return
             }
             guard photosArray.count > 0 else {
-                print("No photod found")
+                self.showError("No photod found")
                 return
             }
             guard let firstPhoto = photosArray[0] as? [String: Any] else {
